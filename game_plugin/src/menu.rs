@@ -39,7 +39,7 @@ fn setup_menu(
     commands
         .spawn_bundle(ButtonBundle {
             style: Style {
-                size: Size::new(Val::Px(120.0), Val::Px(50.0)),
+                size: Size::new(Val::Px(400.0), Val::Px(50.0)),
                 margin: Rect::all(Val::Auto),
                 justify_content: JustifyContent::Center,
                 align_items: AlignItems::Center,
@@ -53,7 +53,7 @@ fn setup_menu(
             parent.spawn_bundle(TextBundle {
                 text: Text {
                     sections: vec![TextSection {
-                        value: "Play".to_string(),
+                        value: "Protect The God's Apple".to_string(),
                         style: TextStyle {
                             font: asset_server.get_handle("fonts/FiraSans-Bold.ttf"),
                             font_size: 40.0,
