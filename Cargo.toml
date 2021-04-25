@@ -1,7 +1,7 @@
 [package]
-name = "bevy_game" # ToDo
+name = "worms_and_religion" # ToDo
 version = "0.1.0"
-authors = ["Niklas Eicker <git@nikl.me>"] # ToDo: you are the author ;)
+authors = ["Max Brajsky kzerot@gmail.com"] # ToDo: you are the author ;)
 edition = "2018"
 
 [profile.dev]

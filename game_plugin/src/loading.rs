@@ -33,7 +33,9 @@ pub struct AudioAssets {
 
 pub struct TextureAssets {
     pub texture_bevy: Handle<Texture>,
+    pub texture_worm: Handle<Texture>,
 }
+
 
 fn start_loading(mut commands: Commands, asset_server: Res<AssetServer>) {
     let mut fonts: Vec<HandleUntyped> = vec![];
@@ -44,12 +46,15 @@ fn start_loading(mut commands: Commands, asset_server: Res<AssetServer>) {
 
     let mut textures: Vec<HandleUntyped> = vec![];
     textures.push(asset_server.load_untyped(PATHS.texture_bevy));
-
+    textures.push(asset_server.load_untyped(PATHS.texture_worm));
+   
+    
     commands.insert_resource(LoadingState {
         textures,
         fonts,
         audio,
     });
+
 }
 
 fn check_state(
@@ -84,7 +89,9 @@ fn check_state(
 
     commands.insert_resource(TextureAssets {
         texture_bevy: asset_server.get_handle(PATHS.texture_bevy),
+        texture_worm: asset_server.get_handle(PATHS.texture_worm),
     });
+
 
     state.set(GameState::Menu).unwrap();
 }

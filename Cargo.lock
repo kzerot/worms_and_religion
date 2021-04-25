@@ -224,6 +224,7 @@ version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c6b14f8ba7c373fdf7bd27547bb95f2849b2569bf02bbf3d19ca54e9d692de4f"
 dependencies = [
+ "bevy_dylib",
  "bevy_internal",
  "syn",
 ]
@@ -321,6 +322,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_dylib"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "efa62c7c03470969539a07337bf8c5694c0b952678fd081d68b6331842134b85"
+dependencies = [
+ "bevy_internal",
+]
+
+[[package]]
 name = "bevy_ecs"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -351,17 +361,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "bevy_game"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "bevy_webgl2",
- "embed-resource",
- "game_plugin",
- "winit",
 ]
 
 [[package]]
@@ -3487,6 +3486,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d129932f4644ac2396cb456385cbf9e63b5b30c6e8dc4820bdca4eb082037a5"
 dependencies = [
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "worms_and_religion"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_webgl2",
+ "embed-resource",
+ "game_plugin",
+ "winit",
 ]
 
 [[package]]
