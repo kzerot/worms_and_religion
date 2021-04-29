@@ -1,6 +1,6 @@
-use crate::loading::TextureAssets;
+use crate::{loading::TextureAssets};
 use crate::GameState;
-use crate::game::{AppleHP, Level};
+use crate::game::{AppleHP, Level, Scores};
 use bevy::prelude::*;
 use rand::prelude::random;
 
@@ -10,6 +10,7 @@ pub struct Worm;
 pub struct WormDirection{
     dir: Vec2
 }
+pub struct Hp(pub f32);
 
 pub struct WormSpeed(f32);
 
@@ -23,9 +24,9 @@ impl Plugin for WormsPlugin {
         .add_system_set(SystemSet::on_update(GameState::Playing)
             .with_system(animate_worm.system())
             .with_system(move_worm.system())
-        );
-        // .add_system_set(SystemSet::on_update(GameState::Playing).with_system(move_player.system()))
-        // .add_system_set(SystemSet::on_exit(GameState::Playing).with_system(remove_player.system()));
+            .with_system(check_death.system())
+        )
+        .add_system_set(SystemSet::on_exit(GameState::Playing).with_system(remove_worm.system()));
     }
 }
 
@@ -62,20 +63,20 @@ fn spawn_worm(
             .insert(Timer::from_seconds(0.03, true))
             .insert(WormDirection{dir:rot})
             .insert(WormSpeed(30.0 + random::<f32>()*20.0))
+            .insert(Hp(3.0))
             ;
         level.need_worms -= 1;
-        println!("Worm spawned! HOHO!")
     } 
 }
 
 fn move_worm(
     time: Res<Time>,
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Transform, &WormDirection), With<Worm>>,
+    mut query: Query<(Entity, &mut Transform, &WormDirection, &WormSpeed), With<Worm>>,
     mut apple_hp: ResMut<AppleHP>
 ){
-    for (e, mut worm_transform, direction) in query.iter_mut() {
-        worm_transform.translation += Vec3::new(direction.dir.x, direction.dir.y, 0.0) * time.delta_seconds() * 50.0;
+    for (e, mut worm_transform, direction, speed) in query.iter_mut() {
+        worm_transform.translation += Vec3::new(direction.dir.x, direction.dir.y, 0.0) * time.delta_seconds() * speed.0;
         if worm_transform.translation.distance(Vec3::new(0.,0., 0.)) <= 150.0 {
             println!("Eaten");
             commands.entity(e).despawn();
@@ -96,5 +97,26 @@ fn animate_worm(
             sprite.index = ((sprite.index as usize + 1) % texture_atlas.textures.len()) as u32;
             
         }
+    }
+}
+
+fn check_death(
+    mut commands: Commands,
+    mut scores: ResMut<Scores>,
+    query: Query<(Entity, &Hp)>
+){
+    for (e, hp) in query.iter(){
+        if hp.0 <= 0.0 {
+            println!("Killed");
+            commands.entity(e).despawn();
+            scores.worms += 1;
+            print!("Worms now - {}", scores.worms);
+        }
+    }
+}
+
+fn remove_worm(mut commands: Commands, player_query: Query<Entity, With<Worm>>) {
+    for player in player_query.iter() {
+        commands.entity(player).despawn();
     }
 }

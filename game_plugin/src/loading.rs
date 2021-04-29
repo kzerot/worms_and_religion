@@ -34,6 +34,10 @@ pub struct AudioAssets {
 pub struct TextureAssets {
     pub texture_bevy: Handle<Texture>,
     pub texture_worm: Handle<Texture>,
+    pub texture_avemater: Handle<Texture>,
+    pub texture_apple: Handle<Texture>,
+    pub texture_back: Handle<Texture>
+
 }
 
 
@@ -47,7 +51,9 @@ fn start_loading(mut commands: Commands, asset_server: Res<AssetServer>) {
     let mut textures: Vec<HandleUntyped> = vec![];
     textures.push(asset_server.load_untyped(PATHS.texture_bevy));
     textures.push(asset_server.load_untyped(PATHS.texture_worm));
-   
+    textures.push(asset_server.load_untyped(PATHS.texture_avemater));
+    textures.push(asset_server.load_untyped(PATHS.texture_apple));
+    textures.push(asset_server.load_untyped(PATHS.texture_back));
     
     commands.insert_resource(LoadingState {
         textures,
@@ -90,6 +96,9 @@ fn check_state(
     commands.insert_resource(TextureAssets {
         texture_bevy: asset_server.get_handle(PATHS.texture_bevy),
         texture_worm: asset_server.get_handle(PATHS.texture_worm),
+        texture_avemater: asset_server.get_handle(PATHS.texture_avemater),
+        texture_apple: asset_server.get_handle(PATHS.texture_apple),
+        texture_back: asset_server.get_handle(PATHS.texture_back)
     });
 
 

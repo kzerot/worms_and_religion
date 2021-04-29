@@ -10,7 +10,9 @@ impl Plugin for ActionsPlugin {
     fn build(&self, app: &mut AppBuilder) {
         let mut prayers: HashMap<String, String> = HashMap::default();
         prayers.insert("ave_maria".to_string(), "Ave Maria".to_uppercase().to_string());
-
+        prayers.insert("pater".to_string(), "Pater Noster".to_uppercase().to_string());
+        prayers.insert("signum".to_string(), "Signum Crucis".to_uppercase().to_string());
+        
         app
         .add_event::<PrayerComplete>()
         .insert_resource(
@@ -34,6 +36,7 @@ impl Plugin for ActionsPlugin {
         std::any::type_name::<Self>()
     }
 }
+
 
 
 pub struct TextEntered {
@@ -77,7 +80,7 @@ fn key_to_string(key_code: &KeyCode) -> &'static str {
     key
 }
 
-struct PrayerComplete(String);
+pub struct PrayerComplete(pub String);
 
 fn prayer_inputed(
     keyboard_input: Res<Input<KeyCode>>,
@@ -115,10 +118,5 @@ fn prayer_inputed(
                 } 
             }
         }
-
-
-
-        // text.text_entered.push_str(key_literal);
-        // println!("Text now: {}", text.text_entered);
     }
 }

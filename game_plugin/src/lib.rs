@@ -6,6 +6,7 @@ mod player;
 mod worms;
 mod game;
 mod prayers;
+mod attacks;
 
 use crate::actions::ActionsPlugin;
 use crate::audio::InternalAudioPlugin;
@@ -15,6 +16,7 @@ use crate::player::PlayerPlugin;
 use crate::worms::WormsPlugin;
 use crate::game::GameProcessPlugin;
 use crate::prayers::PrayersPlugin;
+use attacks::AttackPlugin;
 use bevy::app::AppBuilder;
 // use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
@@ -32,15 +34,17 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut AppBuilder) {
         app.add_state(GameState::Loading)
             .add_plugin(LoadingPlugin)
+            .add_plugin(GameProcessPlugin)
             .add_plugin(ActionsPlugin)
             .add_plugin(MenuPlugin)
             .add_plugin(InternalAudioPlugin)
             .add_plugin(PlayerPlugin)
             .add_plugin(WormsPlugin)
-            .add_plugin(GameProcessPlugin)
             .add_plugin(PrayersPlugin)
+            .add_plugin(AttackPlugin)
             // .add_plugin(FrameTimeDiagnosticsPlugin::default())
             // .add_plugin(LogDiagnosticsPlugin::default())
             ;
     }
 }
+
